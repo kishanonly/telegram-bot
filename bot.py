@@ -9,8 +9,8 @@ async def start(update: Update, context: CallbackContext):
 async def help_command(update: Update, context: CallbackContext):
     await update.message.reply_text(
         "Here are some commands you can use:\n"
-        "/start - Start interacting with the bot\n"
-        "/help - Get this help message"
+        "/start - Start interacting with the bot kishan \n"
+        "/help - Get this help message kishan "
     )
 
 async def echo(update: Update, context: CallbackContext):
