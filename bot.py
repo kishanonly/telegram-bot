@@ -34,12 +34,18 @@ async def help_command(update: Update, context: CallbackContext):
     )
 
 async def handle_message(update: Update, context: CallbackContext):
-    text = update.message.text.lower()
-    if "kishan" in text:
-        phone_numbers = get_phone_numbers("Kishan")
-        await update.message.reply_text(f"Kishan's phone number(s): {phone_numbers}.")
+    # Get the text message from the user
+    text = update.message.text.strip().lower()
+
+    # Search the database for the name
+    phone_numbers = get_phone_numbers(text.capitalize())  # Capitalize to match the database entries
+
+    if phone_numbers != "No entry found for that name.":
+        # If found, reply with the phone numbers
+        await update.message.reply_text(f"{text.capitalize()}'s phone number(s): {phone_numbers}.")
     else:
-        await update.message.reply_text("You said2: " + update.message.text)
+        # If not found, reply with "Not found"
+        await update.message.reply_text("Not found.")
 
 def main():
     application = Application.builder().token(BOT_TOKEN).build()
