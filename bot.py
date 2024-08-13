@@ -1,23 +1,21 @@
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
+from telegram import Update
+from telegram.ext import Application, CommandHandler, MessageHandler, filters, CallbackContext
 
-# Replace 'YOUR TOKEN HERE' with your actual bot token
 BOT_TOKEN = "6901363578:AAFFwiHm2qpZq28cH8yKrkmshMyKylsoBF8"
 
-def start(update, context):
-    update.message.reply_text('Hello! Welcome to SathikissBot!')
+async def start(update: Update, context: CallbackContext):
+    await update.message.reply_text('Hello! Welcome to SathikissBot!')
 
-def echo(update, context):
-    update.message.reply_text(update.message.text)
+async def echo(update: Update, context: CallbackContext):
+    await update.message.reply_text(update.message.text)
 
 def main():
-    updater = Updater(BOT_TOKEN, use_context=True)
-    dp = updater.dispatcher
+    application = Application.builder().token(BOT_TOKEN).build()
 
-    dp.add_handler(CommandHandler("start", start))
-    dp.add_handler(MessageHandler(Filters.text & ~Filters.command, echo))
+    application.add_handler(CommandHandler("start", start))
+    application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, echo))
 
-    updater.start_polling()
-    updater.idle()
+    application.run_polling()
 
 if __name__ == '__main__':
     main()
